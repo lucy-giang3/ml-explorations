@@ -28,12 +28,12 @@ The CV table reports mean and standard deviation for accuracy and F1, mean ROC-A
 
 The 3-fold CV comparison selected the bigram logistic regression candidate. Test metrics below come from a 50,000-review sample of the official held-out test split. Latency is hardware-dependent and measured in the notebook's current environment.
 
-| Model | CV accuracy | CV F1 | CV ROC-AUC | Mean fit time / fold | Inference ms / 1,000 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Dummy majority | 0.5000 | 0.0000 | 0.5000 | 0.0019 s | 0.034 |
-| MultinomialNB + unigram TF-IDF | 0.8395 | 0.8348 | 0.9190 | 0.7217 s | 59.288 |
-| Logistic regression, unigram, C=1 | 0.8734 | 0.8733 | 0.9446 | 0.7792 s | 58.867 |
-| Logistic regression, 1–2 grams, C=4 | **0.8896** | **0.8893** | **0.9572** | 2.8047 s | 117.855 |
+| Model                               | CV accuracy |      CV F1 | CV ROC-AUC | Mean fit time / fold | Inference ms / 1,000 |
+| ----------------------------------- | ----------: | ---------: | ---------: | -------------------: | -------------------: |
+| Dummy majority                      |      0.5000 |     0.0000 |     0.5000 |             0.0019 s |                0.034 |
+| MultinomialNB + unigram TF-IDF      |      0.8395 |     0.8348 |     0.9190 |             0.7217 s |               59.288 |
+| Logistic regression, unigram, C=1   |      0.8734 |     0.8733 |     0.9446 |             0.7792 s |               58.867 |
+| Logistic regression, 1–2 grams, C=4 |  **0.8896** | **0.8893** | **0.9572** |             2.8047 s |              117.855 |
 
 Held-out test results: **92.03% accuracy**, **0.9204 positive-class F1**, and **0.9754 ROC-AUC**. These measurements are included as a record of this run; rerunning the notebook may produce small differences if the dataset version, sample, or environment changes.
 
@@ -49,8 +49,8 @@ The app accepts one review and displays the predicted sentiment and the model's 
 
 ### Demo Examples
 
-| Extremely Negative | Mildly Negative | Positive |
-| :---: | :---: | :---: |
+|                Extremely Negative                |               Mildly Negative               |                Positive                |
+| :----------------------------------------------: | :-----------------------------------------: | :------------------------------------: |
 | ![Extremely Negative](images/demo_example_1.png) | ![Mild Negative](images/demo_example_2.png) | ![Positive](images/demo_example_3.png) |
 
 ## Task definition and limits
@@ -61,3 +61,9 @@ The dataset contains review polarity labels derived from ratings: 1 and 2 are ne
 
 - [Amazon Reviews dataset on Kaggle](https://www.kaggle.com/datasets/kritanjalijain/amazon-reviews)
 - Zhang, Zhao, and LeCun (2015), [Character-level Convolutional Networks for Text Classification](https://arxiv.org/abs/1509.01626)
+
+## Author and License
+
+_Author: Lucy Giang (lucy-giang3), updated Jul. 2026_
+
+This code is shared for free for learning and personal use only. Commercial use is prohibited.
