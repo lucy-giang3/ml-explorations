@@ -1,0 +1,195 @@
+{
+  "source": "sarcasm_detection_bert.ipynb saved outputs",
+  "dataset": "danofer/sarcasm train-balanced-sarcasm.csv",
+  "seed": 42,
+  "device": "cpu",
+  "mixed_precision": false,
+  "sampled_rows": 100000,
+  "cleaned_rows_before_sampling": 962293,
+  "split": {
+    "train": 80000,
+    "validation": 10000,
+    "test": 10000,
+    "sarcastic_share_approx": 0.503
+  },
+  "baseline": {
+    "model": "TF-IDF word unigram/bigram + Logistic Regression",
+    "accuracy": 0.6893,
+    "sarcastic_class_f1": 0.680908,
+    "inference_latency_ms_per_comment": 0.022755,
+    "latency_method": "Single notebook prediction pass over held-out test set on CPU; includes TF-IDF transformation; no warm-up/repeated trials."
+  },
+  "bert_without_parent": {
+    "status": "completed",
+    "model": "bert-base-uncased",
+    "epochs_completed": 3,
+    "validation": {
+      "epoch_1": {
+        "loss": 0.5302,
+        "accuracy": 0.7398,
+        "f1": 0.7317,
+        "train_loss": 0.5723
+      },
+      "epoch_2": {
+        "loss": 0.5223,
+        "accuracy": 0.7476,
+        "f1": 0.7485,
+        "train_loss": 0.4618
+      },
+      "epoch_3": {
+        "loss": 0.5919,
+        "accuracy": 0.738,
+        "f1": 0.7463,
+        "train_loss": 0.3551
+      },
+      "selected_epoch": 2,
+      "best_f1": 0.7485
+    },
+    "test": {
+      "loss": 0.529,
+      "accuracy": 0.7429,
+      "precision": 0.7518,
+      "recall": 0.7298,
+      "f1": 0.7406,
+      "n": 10000,
+      "confusion_matrix": {
+        "true_negative": 3758,
+        "false_positive": 1212,
+        "false_negative": 1359,
+        "true_positive": 3671
+      }
+    },
+    "training_seconds_per_epoch": [
+      10380,
+      10309,
+      10279
+    ],
+    "inference_latency_ms_per_comment": null,
+    "inference_latency_note": "Not measured; the notebook's timing cell ran on the parent-context model."
+  },
+  "comparison": {
+    "accuracy_absolute_gain": 0.0536,
+    "f1_absolute_gain": 0.059736,
+    "accuracy_gain_percentage_points": 5.36,
+    "bert_with_parent_vs_baseline": {
+      "accuracy_absolute_gain": 0.0574,
+      "f1_absolute_gain": 0.067328,
+      "accuracy_gain_percentage_points": 5.74
+    },
+    "bert_with_parent_vs_without_parent": {
+      "accuracy_absolute_gain": 0.0038,
+      "f1_absolute_gain": 0.007592,
+      "accuracy_gain_percentage_points": 0.38
+    },
+    "latency_ratio_parent_bert_to_baseline": 1886,
+    "caveat": "Single seed per setting, no significance test; parent input shared the 64-token limit."
+  },
+  "bert_with_parent": {
+    "status": "completed",
+    "model": "bert-base-uncased",
+    "input": "parent comment (segment A) + reply (segment B), max_len 64",
+    "epochs_completed": 3,
+    "validation": null,
+    "validation_note": "Per-epoch validation metrics and selected epoch were not printed by the notebook.",
+    "test": {
+      "loss": null,
+      "accuracy": 0.7467,
+      "precision": null,
+      "recall": null,
+      "f1": 0.748236,
+      "n": 10000
+    },
+    "training_seconds_per_epoch": null,
+    "inference_latency_ms_per_comment": 42.928452,
+    "latency_method": "CPU, batch size 64, includes tokenization and batched forward passes, sentence-pair inputs, single run.",
+    "steps_per_epoch": 2500
+  },
+  "metadata_error_analysis": {
+    "status": "completed",
+    "model_analyzed": "bert_with_parent",
+    "misclassified": 2533,
+    "test_size": 10000,
+    "error_rate": 0.2533,
+    "accuracy_by_length_words": {
+      "1-5": {
+        "n": 2520,
+        "accuracy": 0.7183
+      },
+      "6-10": {
+        "n": 3323,
+        "accuracy": 0.7367
+      },
+      "11-20": {
+        "n": 3126,
+        "accuracy": 0.7681
+      },
+      "21-40": {
+        "n": 939,
+        "accuracy": 0.7785
+      },
+      "40+": {
+        "n": 91,
+        "accuracy": 0.8352
+      }
+    },
+    "highest_error_subreddits_min_n_50": {
+      "creepyPMs": {
+        "n": 61,
+        "error_rate": 0.3279
+      },
+      "soccer": {
+        "n": 100,
+        "error_rate": 0.32
+      },
+      "pcmasterrace": {
+        "n": 208,
+        "error_rate": 0.3125
+      },
+      "WTF": {
+        "n": 103,
+        "error_rate": 0.301
+      },
+      "todayilearned": {
+        "n": 123,
+        "error_rate": 0.2927
+      },
+      "AskReddit": {
+        "n": 629,
+        "error_rate": 0.275
+      }
+    },
+    "error_rate_by_score_quantile": [
+      0.256,
+      0.2577,
+      0.2501,
+      0.2464
+    ],
+    "error_rate_by_ups_quantile": [
+      0.2393,
+      0.2646,
+      0.2618,
+      0.251,
+      0.2441
+    ],
+    "downs_quantile": "single bucket; uninformative",
+    "top10_confident_errors_false_positives": 9,
+    "confusion_matrix_note": "The notebook's confusion matrix and precision/recall describe bert_without_parent; see bert_without_parent.test."
+  },
+  "interpretation": "Both BERT variants improve held-out accuracy and F1 over the TF-IDF baseline on this split. Parent context adds a small gain (+0.38 points accuracy, +0.0076 F1) from a single run per setting, which is suggestive rather than established. Error rates vary little by vote metadata; subreddit slices are small and descriptive.",
+  "training_config": {
+    "model": "bert-base-uncased",
+    "max_len": 64,
+    "batch_size": 32,
+    "epochs": 3,
+    "learning_rate": 2e-05,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "checkpoint_selection": "best validation F1"
+  },
+  "raw_rows": 1010826,
+  "comparison_note": "accuracy_absolute_gain / f1_absolute_gain / accuracy_gain_percentage_points are reply-only BERT vs baseline (unchanged keys from the earlier snapshot).",
+  "run_notes": {
+    "model_mixing": "Confusion matrix and precision/recall are from the reply-only model; latency, length, subreddit and vote analyses were computed on the parent-context model (the model loaded when those cells ran).",
+    "dataset_note": "Both classes contained 505,413 comments before cleaning."
+  }
+}

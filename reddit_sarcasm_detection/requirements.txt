@@ -1,0 +1,10 @@
+transformers
+kagglehub
+scikit-learn
+pandas
+numpy
+matplotlib
+seaborn
+torch
+joblib
+jupyter

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data and credentials
+data/
+*.csv
+.kaggle/
+
+# Model checkpoints and training artifacts
+bert_sarcasm_model/
+bert_sarcasm_with_parent/
+bert_sarcasm_without_parent/
+*.pt
+*.pth
+*.safetensors
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+outputs/
